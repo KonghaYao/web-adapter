@@ -20,7 +20,7 @@ export class BrowserAssetsMap extends AssetsMap {
             throw new Error(token + " 未返回信息")
         })
     }
-    loadFileResponse(token: string): Promise<Response> {
+    async loadFileResponse(token: string): Promise<Response> {
         return fetch(this.ensureGet(token));
     }
     async outputFile(
