@@ -1,6 +1,7 @@
 import { WriteFileOptions } from "fs-extra";
 import { AssetsMap } from "../AssetsMap";
-/** 请在使用之前将 outputFile 补全
+/** 
+ * 请在使用之前将 outputFile 补全
  * @example 
  * const assets = new BrowserAssetsMap()
  * assets.outputFile = (file,data,options)=>{

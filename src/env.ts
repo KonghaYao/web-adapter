@@ -10,6 +10,7 @@ export const isBrowser =
     typeof window === "object" &&
     typeof document === "object" &&
     document.nodeType === 9;
+/** @ts-ignore */
 const Deno = globalThis.Deno;
 
 export const isDeno = typeof Deno === "object" && Deno.version;

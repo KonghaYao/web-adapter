@@ -1,6 +1,6 @@
 import { outputFile, readFile, createReadStream } from "fs-extra";
 import { AssetsMap } from "../AssetsMap";
-import { resolveNodeModule } from '../resolveNodeMoudle'
+import { resolveNodeModule } from '../../resolveNodeMoudle'
 export class NodeAssetsMap extends AssetsMap {
     async loadFileAsync(token: string): Promise<Uint8Array> {
         const targetPath = this.ensureGet(token)

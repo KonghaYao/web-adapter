@@ -17,7 +17,7 @@ globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit | undefin
     }
 }
 
-describe("NodeAssetsMap", () => {
+describe("BrowserAssetsMap", () => {
     let assetsMap!: BrowserAssetsMap;
 
     beforeEach(() => {
