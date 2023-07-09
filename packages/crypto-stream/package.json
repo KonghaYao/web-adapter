@@ -1,12 +1,22 @@
 {
-  "name": "crypto-stream",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "name": "stream-crypto",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "prepublish": "tsc"
+    },
+    "keywords": [
+        "stream",
+        "node",
+        "crypto",
+        "hash",
+        "hex"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/KonghaYao/web-adapter/tree/main/packages/crypto-stream"
+    },
+    "author": "konghayao",
+    "license": "Apache-2.0"
 }
