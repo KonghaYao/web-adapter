@@ -5,6 +5,10 @@ export const getFinalDataFromStream = <T extends Uint8Array | string>(readable: 
         let type: 'uint8' | "string" = 'uint8';
         let last: T;
         readable.pipeTo(new WritableStream({
+            abort: (e) => {
+
+                rej(e)
+            },
             write(chunk) {
                 if (!last) {
                     last = chunk;
