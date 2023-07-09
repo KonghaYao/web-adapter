@@ -14,7 +14,7 @@ export class SignStream extends TransformStream<Uint8Array, Uint8Array> {
         });
     }
 }
-class VerifyError extends Error {
+export class VerifyError extends Error {
 }
 export class VerifyStream extends TransformStream<Uint8Array, Uint8Array> {
     constructor(publicKey: KeyLike | VerifyKeyObjectInput | VerifyPublicKeyInput | VerifyJsonWebKeyInput, signature: Uint8Array, ...args: Parameters<typeof createVerify>) {

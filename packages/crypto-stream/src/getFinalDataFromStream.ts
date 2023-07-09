@@ -38,3 +38,7 @@ export const getFinalDataFromStream = <T extends Uint8Array | string>(readable: 
         }));
     });
 };
+
+export const getFinalDataFromStreams = (...args: ReadableStream[]) => {
+    return Promise.all(args.map(i => getFinalDataFromStream(i)))
+}
