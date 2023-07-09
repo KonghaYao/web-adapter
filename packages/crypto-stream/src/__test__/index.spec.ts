@@ -1,8 +1,5 @@
 // @vitest-environment node
-import { getFinalDataFromStream } from "../index";
-import { createRandomBytesStream } from "../index";
-import { HexDecodeStream, HexEncoderStream } from "../index";
-import { createHashStream, createHmacStream } from "../index";
+import { getFinalDataFromStream, createRandomBytesStream, HexDecodeStream, HexEncoderStream, createHashStream, createHmacStream, createCipherivStream, createDecipherivStream, SignStream, VerifyStream, createStream, getFinalDataFromStreams } from "../index";
 import { expect, test } from "vitest";
 import {
     createHash,
@@ -10,8 +7,17 @@ import {
     createHmac,
     generateKeyPairSync,
 } from "node:crypto";
-import { createCipherivStream, createDecipherivStream } from "../index";
-import { SignStream, VerifyStream } from "../index";
+
+
+
+test("createStream Test", async () => {
+    const binary = randomBytes(16)
+    const str = [...binary].map(i => i.toString(16)).join('')
+    const [b, s] = await getFinalDataFromStreams(createStream(binary), createStream(str))
+    expect(b).eql(binary)
+    expect(s).eql(str)
+});
+
 test("Hex Test", async () => {
     const [main, copied] = createRandomBytesStream(100).tee();
     const [hexMain, hexCopied] = main.pipeThrough(new HexEncoderStream()).tee();
@@ -65,7 +71,7 @@ test("Hash Test", async () => {
     right.update(hashed);
     expect(res).eq(right.digest("hex"));
 });
-test("Hash Test", async () => {
+test("Cipheriv Test", async () => {
     const [main, copied] = createRandomBytesStream(100).tee();
     const key = randomBytes(32);
     const iv = randomBytes(16);
