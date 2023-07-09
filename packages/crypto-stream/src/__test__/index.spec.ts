@@ -1,5 +1,8 @@
 // @vitest-environment node
-import { HexDecodeStream, HexEncoderStream, createHashStream, createRandomBytesStream, getFinalDataFromStream } from '../index'
+import { getFinalDataFromStream } from "../getFinalDataFromStream"
+import { createRandomBytesStream } from '../createRandomBytesStream'
+import { HexDecodeStream, HexEncoderStream } from '../HexEncoderStream'
+import { createHashStream } from '../createHashStream'
 import { expect, test } from 'vitest'
 import { createHash, randomBytes } from 'node:crypto'
 test('Hex Test', async () => {
