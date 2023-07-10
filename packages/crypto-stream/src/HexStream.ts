@@ -1,5 +1,5 @@
 
-export class HexEncoderStream extends TransformStream<Uint8Array, string> {
+export class HexDecoderStream extends TransformStream<Uint8Array, string> {
     constructor() {
         super({
             transform(chunk, controller) {
@@ -13,7 +13,7 @@ export class HexEncoderStream extends TransformStream<Uint8Array, string> {
         });
     }
 }
-export class HexDecodeStream extends TransformStream<string, Uint8Array> {
+export class HexEncoderStream extends TransformStream<string, Uint8Array> {
     constructor() {
         super({
             transform(hexString, controller) {

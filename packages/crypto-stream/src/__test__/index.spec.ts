@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { getFinalDataFromStream, createRandomBytesStream, HexDecodeStream, HexEncoderStream, createHashStream, createHmacStream, createCipherivStream, createDecipherivStream, SignStream, VerifyStream, createStream, getFinalDataFromStreams } from "../index";
+import { getFinalDataFromStream, createRandomBytesStream, HexDecoderStream, HexEncoderStream, createHashStream, createHmacStream, createCipherivStream, createDecipherivStream, SignStream, VerifyStream, createStream, getFinalDataFromStreams } from "../index";
 import { expect, test } from "vitest";
 import {
     createHash,
@@ -20,12 +20,12 @@ test("createStream Test", async () => {
 
 test("Hex Test", async () => {
     const [main, copied] = createRandomBytesStream(100).tee();
-    const [hexMain, hexCopied] = main.pipeThrough(new HexEncoderStream()).tee();
+    const [hexMain, hexCopied] = main.pipeThrough(new HexDecoderStream()).tee();
     const [hexed, originLike, origin] = await Promise.all([
         /** hex 化 */
         getFinalDataFromStream(hexMain),
         /** hex 化后还原 */
-        getFinalDataFromStream(hexCopied.pipeThrough(new HexDecodeStream())),
+        getFinalDataFromStream(hexCopied.pipeThrough(new HexEncoderStream())),
 
         /** 原始数据 */
         getFinalDataFromStream(copied),
@@ -44,7 +44,7 @@ test("Hmac Test", async () => {
         getFinalDataFromStream(
             main
                 .pipeThrough(createHmacStream("sha256", key))
-                .pipeThrough(new HexEncoderStream())
+                .pipeThrough(new HexDecoderStream())
         ),
         // 原始数据
         getFinalDataFromStream(copied),
@@ -61,7 +61,7 @@ test("Hash Test", async () => {
         getFinalDataFromStream(
             main
                 .pipeThrough(createHashStream("sha256"))
-                .pipeThrough(new HexEncoderStream())
+                .pipeThrough(new HexDecoderStream())
         ),
         // 原始数据
         getFinalDataFromStream(copied),

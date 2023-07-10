@@ -1,6 +1,6 @@
 export * from './createCipherivStream'
 export * from './createHashStream'
-export * from './HexEncoderStream'
+export * from './HexStream'
 export * from './createRandomBytesStream'
 export * from './getFinalDataFromStream'
 export * from './SignStream'
