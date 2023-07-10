@@ -1,8 +1,10 @@
+import { TypedArray } from "./interface";
 
-export class HexDecoderStream extends TransformStream<Uint8Array, string> {
+export class HexDecoderStream extends TransformStream<TypedArray, string> {
     constructor() {
         super({
-            transform(chunk, controller) {
+            transform(chunk_input, controller) {
+                const chunk = new Uint8Array(chunk_input)
                 let hexString = '';
                 for (let i = 0; i < chunk.length; i++) {
                     const hexValue = chunk[i].toString(16).padStart(2, '0');

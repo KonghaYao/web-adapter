@@ -1,6 +1,7 @@
 import { createSign, createVerify, KeyLike, SignKeyObjectInput, SignPrivateKeyInput, VerifyKeyObjectInput, VerifyPublicKeyInput, VerifyJsonWebKeyInput } from 'node:crypto';
+import { BinaryLike } from './interface';
 
-export class SignStream extends TransformStream<Uint8Array, Uint8Array> {
+export class SignStream extends TransformStream<BinaryLike, Uint8Array> {
     constructor(privateKey: KeyLike | SignKeyObjectInput | SignPrivateKeyInput, ...args: Parameters<typeof createSign>) {
         const sign = createSign(...args);
         super({
@@ -16,7 +17,7 @@ export class SignStream extends TransformStream<Uint8Array, Uint8Array> {
 }
 export class VerifyError extends Error {
 }
-export class VerifyStream extends TransformStream<Uint8Array, Uint8Array> {
+export class VerifyStream extends TransformStream<BinaryLike, BinaryLike> {
     constructor(publicKey: KeyLike | VerifyKeyObjectInput | VerifyPublicKeyInput | VerifyJsonWebKeyInput, signature: Uint8Array, ...args: Parameters<typeof createVerify>) {
         const verify = createVerify(...args);
         super({

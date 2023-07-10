@@ -1,6 +1,7 @@
+import { BinaryLike } from "./interface";
 import { mergeUint8Arrays } from "./utils/mergeUint8Arrays";
 
-export const getFinalDataFromStream = <T extends Uint8Array | string>(readable: ReadableStream<T>) => {
+export const getFinalDataFromStream = <T extends BinaryLike>(readable: ReadableStream<T>) => {
     return new Promise<T>((res, rej) => {
         let type: 'uint8' | "string" = 'uint8';
         let last: T;
