@@ -58,3 +58,23 @@ const [decrypted, hashCheck, hashString] = await getFinalDataFromStreams(
 hashCheck === hashString; // true
 decrypted; // originData
 ```
+
+### browser polyfill
+
+There is currently no good polyfill available for crypto and stream in NPM. However, you can import them using the CDN provided by esm.sh.
+
+```ts
+import { Transform } from "https://esm.sh/v128/stream-browserify@3.0.0/es2022/stream-browserify.mjs";
+Transform.toWeb = (transform: Transform) => {
+    return new TransformStream({
+        transform(chunk, controller) {
+            transform.write(chunk);
+            transform.once("data", (data) => controller.enqueue(data));
+        },
+        flush() {
+            transform.end();
+        },
+    });
+};
+export * from "https://esm.sh/stream-crypto";
+```
