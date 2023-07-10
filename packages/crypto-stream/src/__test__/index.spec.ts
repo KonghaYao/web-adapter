@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { getFinalDataFromStream, createRandomBytesStream, HexDecoderStream, HexEncoderStream, createHashStream, createHmacStream, createCipherivStream, createDecipherivStream, SignStream, VerifyStream, createStream, getFinalDataFromStreams } from "../index";
+import { getFinalDataFromStream, createRandomBytesStream, HexDecoderStream, HexEncoderStream, createHashStream, createHmacStream, createCipherivStream, createDecipherivStream, SignStream, VerifyStream, createStream, getFinalDataFromStreams, TypedTransform } from "../index";
 import { expect, test } from "vitest";
 import {
     createHash,
@@ -18,7 +18,7 @@ test("createStream Test", async () => {
     expect(s).eql(str)
 });
 
-test("Hex Test", async () => {
+test("Hex Base Test", async () => {
     const [main, copied] = createRandomBytesStream(100).tee();
     const [hexMain, hexCopied] = main.pipeThrough(new HexDecoderStream()).tee();
     const [hexed, originLike, origin] = await Promise.all([
@@ -35,6 +35,14 @@ test("Hex Test", async () => {
     expect(Buffer.from(origin).toString("hex")).eql(
         Buffer.from(originLike).toString("hex")
     ); // 测试 hex 还原效果
+});
+
+test("Hex TypedArray Test", async () => {
+    const [main, copied] = createRandomBytesStream(100).tee()
+    const a = await getFinalDataFromStreams(copied.pipeThrough(new TypedTransform(Uint8Array)).pipeThrough(new HexDecoderStream())
+        , main.pipeThrough(new TypedTransform(Int32Array)).pipeThrough(new HexDecoderStream()),)
+
+    expect(a[0]).eq(a[1])
 });
 test("Hmac Test", async () => {
     const [main, copied] = createRandomBytesStream(100).tee();

@@ -3,7 +3,7 @@ import { mergeUint8Arrays } from "./utils/mergeUint8Arrays";
 
 export const getFinalDataFromStream = <T extends BinaryLike>(readable: ReadableStream<T>) => {
     return new Promise<T>((res, rej) => {
-        let type: 'uint8' | "string" = 'uint8';
+        let type: 'buffer' | "string" = 'buffer';
         let last: T;
         readable.pipeTo(new WritableStream({
             abort: (e) => {
@@ -15,8 +15,6 @@ export const getFinalDataFromStream = <T extends BinaryLike>(readable: ReadableS
                     last = chunk;
                     if (typeof last === 'string') {
                         type = 'string';
-                    } else {
-                        type = 'uint8';
                     }
                     return;
                 } else {
@@ -25,9 +23,9 @@ export const getFinalDataFromStream = <T extends BinaryLike>(readable: ReadableS
                             /**@ts-ignore */
                             last += chunk as string;
                             break;
-                        case "uint8":
+                        default:
                             /**@ts-ignore */
-                            last = mergeUint8Arrays([last as Uint8Array, chunk as Uint8Array]);
+                            last = mergeUint8Arrays([new Uint8Array(last), new Uint8Array(chunk)]);
                             break;
                     }
                 }
